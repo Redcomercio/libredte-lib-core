@@ -154,7 +154,8 @@ class XML extends \DomDocument
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2016-11-21
      */
-    public function loadXML($source, $options = null)
+    #[\ReturnTypeWillChange]
+    public function loadXML($source, $options = 0)
     {
         return $source ? parent::loadXML($this->iso2utf($source), $options) : false;
     }
@@ -391,7 +392,8 @@ class XML extends \DomDocument
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2017-01-20
      */
-    public function saveXML(\DOMNode $node = null, $options = null)
+    #[\ReturnTypeWillChange]
+    public function saveXML(?\DOMNode $node = null, $options = 0)
     {
         $xml = parent::saveXML($node, $options);
         $xml = $this->fixEntities($xml);
@@ -403,7 +405,8 @@ class XML extends \DomDocument
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2017-01-20
      */
-    public function C14N($exclusive = null, $with_comments = null, array $xpath = null, array $ns_prefixes = null)
+    #[\ReturnTypeWillChange]
+    public function C14N($exclusive = false, $with_comments = false, ?array $xpath = null, ?array $ns_prefixes = null)
     {
         $xml = parent::C14N($exclusive, $with_comments, $xpath, $ns_prefixes);
         $xml = $this->fixEntities($xml);
