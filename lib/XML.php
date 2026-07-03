@@ -105,9 +105,9 @@ class XML extends \DomDocument
                     } else {
                         if ($value!==false) {
                             if ($namespace) {
-                                $Node = $this->createElementNS($namespace[0], $namespace[1].':'.$key, $this->iso2utf($this->sanitize($value)));
+                                $Node = $this->createElementNS($namespace[0], $namespace[1].':'.$key, (string) $this->iso2utf($this->sanitize($value)));
                             } else {
-                                $Node = $this->createElement($key, $this->iso2utf($this->sanitize($value)));
+                                $Node = $this->createElement($key, (string) $this->iso2utf($this->sanitize($value)));
                             }
                             $parent->appendChild($Node);
                         }
