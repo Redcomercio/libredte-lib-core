@@ -419,7 +419,7 @@ class EnvioDte extends \sasco\LibreDTE\Sii\Base\Envio
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2019-07-03
      */
-    public function getEstadoValidacion(array $datos = null)
+    public function getEstadoValidacion(?array $datos = null)
     {
         if (!$this->schemaValidate()) {
             return 1;

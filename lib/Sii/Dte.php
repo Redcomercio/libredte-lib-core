@@ -402,7 +402,7 @@ class Dte
         $xml->documentElement->removeAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi');
         $xml->documentElement->removeAttributeNS('http://www.sii.cl/SiiDte', '');
         $TED = $xml->getFlattened('/');
-        return mb_detect_encoding($TED, ['UTF-8', 'ISO-8859-1']) != 'ISO-8859-1' ? utf8_decode($TED) : $TED;
+        return mb_detect_encoding($TED, ['UTF-8', 'ISO-8859-1']) != 'ISO-8859-1' ? mb_convert_encoding($TED, 'ISO-8859-1', 'UTF-8') : $TED;
     }
 
     /**
@@ -1695,6 +1695,9 @@ class Dte
         // si hay impuesto retenido o adicional se contabiliza en el total
         if (!empty($datos['Encabezado']['Totales']['ImptoReten'])) {
             foreach ($datos['Encabezado']['Totales']['ImptoReten'] as &$ImptoReten) {
+                if (isset($ImptoReten['MontoImp']) && !is_numeric($ImptoReten['MontoImp'])) {
+                    $ImptoReten['MontoImp'] = 0;
+                }
                 // si es retención se resta al total y se traspasaa IVA no retenido
                 // en caso que corresponda
                 if (ImpuestosAdicionales::getTipo($ImptoReten['TipoImp'])=='R') {
@@ -1887,7 +1890,7 @@ class Dte
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2019-07-03
      */
-    public function getEstadoValidacion(array $datos = null)
+    public function getEstadoValidacion(?array $datos = null)
     {
         if (!$this->checkFirma()) {
             return 1;

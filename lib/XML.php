@@ -57,7 +57,7 @@ class XML extends \DomDocument
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2023-11-04
      */
-    public function generate(array $data, array $namespace = null, \DOMElement &$parent = null)
+    public function generate(array $data, ?array $namespace = null, ?\DOMElement &$parent = null)
     {
         if ($parent===null) {
             $parent = &$this;
@@ -207,7 +207,7 @@ class XML extends \DomDocument
      */
     private function utf2iso($string)
     {
-        return mb_detect_encoding($string, ['UTF-8', 'ISO-8859-1']) != 'ISO-8859-1' ? utf8_decode($string) : $string;
+        return mb_detect_encoding($string, ['UTF-8', 'ISO-8859-1']) != 'ISO-8859-1' ? mb_convert_encoding($string, 'ISO-8859-1', 'UTF-8') : $string;
     }
 
     /**
@@ -229,7 +229,7 @@ class XML extends \DomDocument
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2016-06-11
      */
-    public function toArray(\DOMElement $dom = null, array &$array = null, $arregloNodos = false)
+    public function toArray(?\DOMElement $dom = null, ?array &$array = null, $arregloNodos = false)
     {
         // determinar valores de parámetros
         if (!$dom) {

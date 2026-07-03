@@ -498,7 +498,7 @@ class Dte extends \sasco\LibreDTE\PDF
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2021-01-08
      */
-    protected function agregarEmisor(array $emisor, $x = 10, $y = 15, $w = 75, $w_img = 30, $font_size = null, array $color = null, $h_folio = null, $w_all = null)
+    protected function agregarEmisor(array $emisor, $x = 10, $y = 15, $w = 75, $w_img = 30, $font_size = null, ?array $color = null, $h_folio = null, $w_all = null)
     {
         $agregarDatosEmisor = true;
         // logo del documento
@@ -610,7 +610,7 @@ class Dte extends \sasco\LibreDTE\PDF
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2019-08-05
      */
-    protected function agregarFolio($rut, $tipo, $folio, $sucursal_sii = null, $x = 130, $y = 15, $w = 70, $font_size = null, array $color = null)
+    protected function agregarFolio($rut, $tipo, $folio, $sucursal_sii = null, $x = 130, $y = 15, $w = 70, $font_size = null, ?array $color = null)
     {
         if ($color===null) {
             $color = $tipo ? ($tipo==52 ? [0,172,140] : [255,0,0]) : [0,0,0];
@@ -819,7 +819,7 @@ class Dte extends \sasco\LibreDTE\PDF
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2016-08-03
      */
-    protected function agregarTraslado($IndTraslado, array $Transporte = null, $x = 10, $offset = 22)
+    protected function agregarTraslado($IndTraslado, ?array $Transporte = null, $x = 10, $offset = 22)
     {
         // agregar tipo de traslado
         if ($IndTraslado) {

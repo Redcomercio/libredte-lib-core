@@ -45,7 +45,7 @@ class Cesion
      * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
      * @version 2020-07-28
      */
-    public function __construct(DteCedido $DTECedido = null, $Seq = 1)
+    public function __construct(?DteCedido $DTECedido = null, $Seq = 1)
     {
         if (!empty($DTECedido)) {
             $this->secuencia = $Seq;

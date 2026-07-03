@@ -260,7 +260,7 @@ class SetPruebas
                         if (in_array($col, ['DescuentoPct', 'RecargoPct'])) {
                             $detalle[$col] = substr($val, 0, -1);
                         } else {
-                            $detalle[$col] = utf8_encode($val); // se convierte de ISO-8859-1 a UTF-8
+                            $detalle[$col] = mb_convert_encoding($val, 'UTF-8', 'ISO-8859-1'); // se convierte de ISO-8859-1 a UTF-8
                         }
                     }
                     // si el documento o el item es EXENTO se agrega campo que lo indica
