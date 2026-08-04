@@ -839,6 +839,11 @@ class Dte extends \sasco\LibreDTE\PDF
                 $transporte .= ' por '.$Transporte['RUTTrans'];
             if (!empty($Transporte['Patente']))
                 $transporte .= ' en vehículo '.$Transporte['Patente'];
+            // Patente del carro o remolque, que exige la Resolución Ex. SII
+            // N°154. Se imprime porque el documento se exhibe durante el
+            // traslado y la fiscalización lo revisa en papel o en pantalla.
+            if (!empty($Transporte['PatenteCarro']))
+                $transporte .= ' con carro '.$Transporte['PatenteCarro'];
             if (isset($Transporte['Chofer']) and is_array($Transporte['Chofer'])) {
                 if (!empty($Transporte['Chofer']['NombreChofer'])) {
                     $transporte .= ' con chofer '.$Transporte['Chofer']['NombreChofer'];
@@ -853,6 +858,26 @@ class Dte extends \sasco\LibreDTE\PDF
                 $this->Texto(':', $x+$offset);
                 $this->setFont('', '', null);
                 $this->MultiTexto(ucfirst(trim($transporte)), $x+$offset+2);
+            }
+            // Fecha y hora del traslado, de la Resolución Ex. SII N°154. Van
+            // en su propia línea y no dentro de la glosa de arriba porque son
+            // el dato que se contrasta contra el momento del control.
+            $fechas = '';
+            if (!empty($Transporte['FchSalida'])) {
+                $fechas .= 'Salida '.$Transporte['FchSalida'];
+                if (!empty($Transporte['HraSalida'])) {
+                    $fechas .= ' '.$Transporte['HraSalida'];
+                }
+            }
+            if (!empty($Transporte['FchLlegada'])) {
+                $fechas .= ($fechas ? ', llegada ' : 'Llegada ').$Transporte['FchLlegada'];
+            }
+            if ($fechas) {
+                $this->setFont('', 'B', null);
+                $this->Texto('Fechas', $x);
+                $this->Texto(':', $x+$offset);
+                $this->setFont('', '', null);
+                $this->MultiTexto($fechas, $x+$offset+2);
             }
         }
         // agregar información de aduana

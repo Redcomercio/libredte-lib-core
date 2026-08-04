@@ -1736,14 +1736,29 @@ class Dte
     private function normalizar_transporte(array &$datos)
     {
         if (!empty($datos['Encabezado']['Transporte'])) {
+            // El orden de estas claves es el orden en que salen los nodos en
+            // el XML, y el esquema del SII valida por secuencia: cambiarlo
+            // hace que el documento sea rechazado. Es el orden de
+            // DTE_v10.xsd, que NO coincide con el de la tabla del PDF del
+            // formato: FchSalida, HraSalida y FchLlegada van al final, después
+            // de Aduana, y no junto a los otros datos del traslado.
             $datos['Encabezado']['Transporte'] = array_merge([
                 'Patente' => false,
+                // Patente del carro, remolque o semirremolque. Lo agrega la
+                // Resolución Ex. SII N°154, obligatorio desde el 2026-11-01
+                // para las guías y para las facturas que amparan traslado.
+                'PatenteCarro' => false,
                 'RUTTrans' => false,
                 'Chofer' => false,
                 'DirDest' => false,
                 'CmnaDest' => false,
                 'CiudadDest' => false,
                 'Aduana' => false,
+                // Los tres de la Resolución Ex. SII N°154. Fecha y hora
+                // efectivas de inicio del traslado, y fecha de llegada.
+                'FchSalida' => false,
+                'HraSalida' => false,
+                'FchLlegada' => false,
             ], $datos['Encabezado']['Transporte']);
         }
     }
